@@ -10,6 +10,9 @@ module.exports = (env, options) => {
     const config = {
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? 'none' : 'source-map',
+        devServer: {
+            contentBase: './dist',
+        },
         watch: !isProduction,
         entry: ['./src/index.js', './src/style.css'],
         output: {
