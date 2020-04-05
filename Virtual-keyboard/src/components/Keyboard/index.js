@@ -25,7 +25,7 @@ class KeyboardKeys {
         this.keyGeneration(keyboardKey, KEYS[row][button]);
         keyboardRow.appendChild(keyboardKey);       
       }
-    }
+    }    
   }
 }
 

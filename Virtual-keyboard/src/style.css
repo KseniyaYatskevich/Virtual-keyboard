@@ -50,6 +50,14 @@ body {
     cursor: pointer;
 }
 
+.active, .keyboard__key:active {
+    background-color:  #216151;
+    box-shadow: 3px 3px 3px #96967f;
+    color: #fff;
+    transition: all 0.1s ease-in;
+    border-radius: 10px;
+}
+
 .keyboard__key_tab {
     flex-grow: 0.5;
 }

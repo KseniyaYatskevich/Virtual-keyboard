@@ -226,6 +226,14 @@ export const KEYS = [
       engShift: '|',
       className: 'keyboard__key',
     },
+    {
+      code: 'Delete',
+      ru: 'Del',
+      ruShift: 'Del',
+      eng: 'Del',
+      engShift: 'Del',
+      className: 'keyboard__key',
+    },
   ],
   [
     {
