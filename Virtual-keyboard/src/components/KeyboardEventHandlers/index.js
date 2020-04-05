@@ -17,25 +17,13 @@ class KeyboardEventHandler {
   }
 
   setCursorPosition() {
-    const { value } = this.textarea;
-    this.textarea.value = '';
-    this.textarea.selectionStart = this.textarea.focus();
-    this.textarea.value = value;
-    console.log(this.textarea.selectionStart, 123);
-  }
-
-  // getCursorPosition(ctrl) {
-  //   var CaretPos = 0;
-  //   if ( document.selection ) {
-  //     ctrl.focus ();
-  //     var Sel = document.selection.createRange();
-  //     Sel.moveStart ('character', -ctrl.value.length);
-  //     CaretPos = Sel.text.length;
-  //   } else if ( ctrl.selectionStart || ctrl.selectionStart == '0' ) {
-  //     CaretPos = ctrl.selectionStart;
-  //   }
-  //   return CaretPos;
-  // }
+    // const { value } = this.textarea;
+    // this.textarea.value = '';
+    // this.textarea.selectionStart = 
+    this.textarea.focus();
+    // this.textarea.value = value;
+    
+  } 
 
   handleEnterAction() {
     this.textarea.value += '\n';
@@ -67,11 +55,22 @@ class KeyboardEventHandler {
   handleCapsLockAction(target) {
     if (this.isCapslock === true) {
       this.textarea.selectionStart = this.textarea.focus();
+      console.log(this.textarea.selectionStart, 6)
       this.textarea.value += target.toUpperCase();
     } else {
-      this.textarea.value += target;
+
+      const end = this.textarea.selectionEnd;
+      const start = this.textarea.selectionStart;
+      const valueBeforeCursore = this.textarea.value.slice(0, start);
+      const vatueAfterCursore = this.textarea.value.slice(end);
+      this.textarea.value = valueBeforeCursore + target + vatueAfterCursore;
+      this.end = this.textarea.selectionEnd - this.textarea.selectionStart;
+      this.setCursorPosition();
+      this.textarea.selectionEnd = start + 1;
+      
+
     }
-    this.setCursorPosition();
+    
   }
 
   clickVirtualKeyHandler(e) {
