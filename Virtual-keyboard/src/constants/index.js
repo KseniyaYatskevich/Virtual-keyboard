@@ -531,13 +531,13 @@ export const IGNORE_CONTENT = [
   'MetaLeft',
   'MetaRight',
   'ShiftRight',
-  'ShiftLeft'
+  'ShiftLeft',
 ];
 
-export const IGNORE_ACTION_BUTTONS= [
+export const IGNORE_ACTION_BUTTONS = [
   'Shift',
   'Tab',
   'Ctrl',
   'Alt',
-  'Win'
+  'Win',
 ];

@@ -1,18 +1,19 @@
+/* eslint-disable no-param-reassign */
 import { KEYS } from '../../constants/index';
 
 class KeyboardKeys {
   constructor(lang) {
     this.lang = lang;
-  };
+  }
 
-  keyGeneration(button, data) {  
-    button.classList = data.className;
-    button.setAttribute('data-code', data.code);
-    button.setAttribute('data-ru', data.ru);
-    button.setAttribute('data-eng', data.eng);
-    button.setAttribute('data-shift-ru', data.ruShift);
-    button.setAttribute('data-shift-eng', data.engShift);
-    button.textContent = data[this.lang];
+  keyGeneration(key, data) {
+    key.classList = data.className;
+    key.setAttribute('data-code', data.code);
+    key.setAttribute('data-ru', data.ru);
+    key.setAttribute('data-eng', data.eng);
+    key.setAttribute('data-shift-ru', data.ruShift);
+    key.setAttribute('data-shift-eng', data.engShift);
+    key.textContent = data[this.lang];
   }
 
   addKeybordButtons(parentElement) {
@@ -23,9 +24,9 @@ class KeyboardKeys {
       for (let button = 0; button < KEYS[row].length; button += 1) {
         const keyboardKey = document.createElement('div');
         this.keyGeneration(keyboardKey, KEYS[row][button]);
-        keyboardRow.appendChild(keyboardKey);       
+        keyboardRow.appendChild(keyboardKey);
       }
-    }    
+    }
   }
 }
 

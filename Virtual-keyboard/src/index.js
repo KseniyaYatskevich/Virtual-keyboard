@@ -9,21 +9,13 @@ class Application {
     this.application = this.layoutApplication.appendComponents();
     this.keyboardEventHandler = new KeyboardEventHandler(this.isCapslock);
   }
-  
+
   addEvents() {
-    
     this.keyboard = document.querySelector('.keyboard');
-    this.keyboard.addEventListener('click', (event) => this.keyboardEventHandler.clickVirtualKeyHandler(event));    
+    this.keyboard.addEventListener('click', (event) => this.keyboardEventHandler.clickVirtualKeyHandler(event));
   }
-
-  func() {
-    this.textarea = document.querySelector
-  }
-
-  
 }
 
 
 const App = new Application();
 App.addEvents();
-
