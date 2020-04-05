@@ -532,6 +532,8 @@ export const IGNORE_CONTENT = [
   'MetaRight',
   'ShiftRight',
   'ShiftLeft',
+  'ArrowLeft',
+  'ArrowRight',
 ];
 
 export const IGNORE_ACTION_BUTTONS = [
