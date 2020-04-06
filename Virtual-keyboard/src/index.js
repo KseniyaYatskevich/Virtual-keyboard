@@ -3,7 +3,7 @@ import KeyboardEventHandler from './components/KeyboardEventHandlers/index';
 
 class Application {
   constructor() {
-    this.lang = localStorage.getItem('language') || 'ru';
+    this.lang = localStorage.getItem('language') || 'ru';  
     this.isCapslock = false;
     this.layoutApplication = new LayoutApplication(this.lang);
     this.application = this.layoutApplication.appendComponents();

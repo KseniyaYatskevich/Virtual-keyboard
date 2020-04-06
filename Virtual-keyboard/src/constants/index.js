@@ -534,6 +534,7 @@ export const IGNORE_CONTENT = [
   'ShiftLeft',
   'ArrowLeft',
   'ArrowRight',
+  'Delete',
 ];
 
 export const IGNORE_ACTION_BUTTONS = [
