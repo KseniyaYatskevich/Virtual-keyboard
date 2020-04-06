@@ -32,9 +32,12 @@ class KeyboardEventHandler {
     }
   }
 
-  handleEnterAction() {
-    this.textarea.value += '\n';
+  handleEnterAction(start, end) {
+    const valueBeforeCursore = this.textarea.value.slice(0, start);
+    const vatueAfterCursore = this.textarea.value.slice(end);
+    this.textarea.value = valueBeforeCursore + '\n' + vatueAfterCursore;
     this.textarea.focus();
+    this.textarea.selectionEnd = end + 1;
   }
 
   handleTabAction() {
@@ -86,7 +89,7 @@ class KeyboardEventHandler {
       const startPosition = this.textarea.selectionStart;
       const endPosition = this.textarea.selectionEnd;
       if (e.target.textContent === 'Enter') {
-        this.handleEnterAction();
+        this.handleEnterAction(startPosition, endPosition);
         return;
       }
       if (e.target.textContent === 'Tab') {
@@ -153,7 +156,7 @@ class KeyboardEventHandler {
     }
     if (e.code === 'Enter') {
       this.addClassToButtons(e.code);
-      this.handleEnterAction();
+      this.handleEnterAction(startPosition, endPosition);
       return;
     }
     if (e.ctrlKey === true && (e.code === 'AltLeft' || e.code === 'AltRight')) {
