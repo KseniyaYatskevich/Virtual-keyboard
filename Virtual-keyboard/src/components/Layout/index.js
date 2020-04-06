@@ -6,7 +6,7 @@ class LayoutApplication {
     this.keyboardKeys = new KeyboardKeys(this.lang);
   }
 
-  appendComponents() {
+  createLayout() {
     this.htmlFile = document.querySelector('html');
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'wrapper';
@@ -14,9 +14,14 @@ class LayoutApplication {
     this.textarea.className = 'textarea';
     this.keyboard = document.createElement('div');
     this.keyboard.className = 'keyboard';
+    this.note = document.createElement('div');
+    this.note.className = 'note';
+    this.note.innerHTML = `<p class="note_text">Клавиатура создавалась для операционной системы Windows.</p>
+                          <p class="note__text">Смена языка <span>Ctrl + Alt</span>.</p>`;
     this.keyboardKeys.addKeybordButtons(this.keyboard);
     this.wrapper.append(this.textarea);
     this.wrapper.append(this.keyboard);
+    this.wrapper.append(this.note);
     this.htmlBody = document.querySelector('body');
     this.htmlBody.append(this.wrapper);
   }

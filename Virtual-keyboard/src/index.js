@@ -1,12 +1,12 @@
-import LayoutApplication from './components/Layout/index';
+import Layout from './components/Layout/index';
 import KeyboardEventHandler from './components/KeyboardEventHandlers/index';
 
 class Application {
   constructor() {
-    this.lang = localStorage.getItem('language') || 'ru';  
+    this.lang = localStorage.getItem('language') || 'ru';
     this.isCapslock = false;
-    this.layoutApplication = new LayoutApplication(this.lang);
-    this.application = this.layoutApplication.appendComponents();
+    this.layoutApplication = new Layout(this.lang);
+    this.application = this.layoutApplication.createLayout();
     this.keyboardEventHandler = new KeyboardEventHandler(this.isCapslock, this.lang);
   }
 
