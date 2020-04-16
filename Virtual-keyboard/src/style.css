@@ -51,11 +51,15 @@
     width: 57px;
     height: 50px;
     font-size: 20px;
-    text-align: center;
     border-radius: 4px;
     background-color:  #3db899;
     box-shadow: 3px 3px 3px #cbcbaa;
     cursor: pointer;
+}
+
+.keyboard__key:hover {
+    background-color:  #3ba389;
+    box-shadow: 3px 3px 3px #999980;
 }
 
 .keyboard__key_middle {
