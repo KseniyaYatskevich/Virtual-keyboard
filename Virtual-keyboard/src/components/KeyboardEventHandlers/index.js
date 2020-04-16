@@ -1,4 +1,4 @@
-import { IGNORE_CONTENT, IGNORE_ACTION_BUTTONS, KEYS } from '../../constants/index';
+import * as constants from '../../constants/index';
 
 class KeyboardEventHandler {
   constructor(isCapslock, lang) {
@@ -10,16 +10,10 @@ class KeyboardEventHandler {
 
   addClassToButtons(code) {
     for (let i = 0; i < this.keyboardButtons.length; i += 1) {
-      if (this.keyboardButtons[i].dataset.code === code) {
+      if (this.keyboardButtons[i].getAttribute('data-code') === code) {
         this.keyboardButtons[i].classList.add('active');
         return;
       }
-    }
-  }
-
-  changeTextContentButtons(data) {
-    for (let i = 0; i < this.keyboardButtons.length; i += 1) {
-      this.keyboardButtons[i].textContent = this.keyboardButtons[i].getAttribute(data);
     }
   }
 
@@ -29,6 +23,13 @@ class KeyboardEventHandler {
         this.keyboardButtons[i].classList.toggle('active');
         return;
       }
+    }
+  }
+
+
+  changeTextContentButtons(data) {
+    for (let i = 0; i < this.keyboardButtons.length; i += 1) {
+      this.keyboardButtons[i].textContent = this.keyboardButtons[i].getAttribute(data);
     }
   }
 
@@ -61,15 +62,11 @@ class KeyboardEventHandler {
   handleCapsLockAction(target, start, end) {
     const valueBeforeCursore = this.textarea.value.slice(0, start);
     const vatueAfterCursore = this.textarea.value.slice(end);
-    if (this.isCapslock) {
-      this.textarea.value = valueBeforeCursore + target.toUpperCase() + vatueAfterCursore;
-      this.textarea.focus();
-      this.textarea.selectionEnd = start + 1;
-    } else {
-      this.textarea.value = valueBeforeCursore + target + vatueAfterCursore;
-      this.textarea.focus();
-      this.textarea.selectionEnd = start + 1;
-    }
+    const capsText = valueBeforeCursore + target.toUpperCase() + vatueAfterCursore;
+    const smallText = valueBeforeCursore + target + vatueAfterCursore;
+    this.textarea.value = (this.isCapslock) ? (capsText) : (smallText);
+    this.textarea.focus();
+    this.textarea.selectionEnd = start + 1;
   }
 
   handleShiftAction() {
@@ -89,7 +86,7 @@ class KeyboardEventHandler {
       const startPosition = this.textarea.selectionStart;
       const endPosition = this.textarea.selectionEnd;
       const { textContent } = e.target;
-      if (IGNORE_ACTION_BUTTONS.includes(textContent)) {
+      if (constants.IGNORE_ACTION_BUTTONS.includes(textContent)) {
         this.textarea.focus();
         return;
       }
@@ -128,8 +125,8 @@ class KeyboardEventHandler {
     e.preventDefault();
     const startPosition = this.textarea.selectionStart;
     const endPosition = this.textarea.selectionEnd;
-    if (IGNORE_CONTENT.includes(e.code)) {
-      this.addClassToButtons(e.code);
+    if (constants.IGNORE_CONTENT.includes(e.code)) {
+      this.addClassToButtons(e.code);      
     }
     switch (e.code) {
       case 'ControlRight':
@@ -179,20 +176,19 @@ class KeyboardEventHandler {
         this.handleEnterAction(startPosition, endPosition);
         break;
       default:
-        for (let row = 0; row < KEYS.length; row += 1) {
-          for (let button = 0; button < KEYS[row].length; button += 1) {
-            const keyContent = KEYS[row][button];
+        for (let row = 0; row < constants.KEYS.length; row += 1) {
+          for (let button = 0; button < constants.KEYS[row].length; button += 1) {
+            const keyContent = constants.KEYS[row][button];
             if (e.code === keyContent.code) {
               if (e.shiftKey === true) {
                 this.addClassToButtons(e.code);
                 const langShift = `${this.lang}Shift`;
-                const valueBeforeCursore = this.textarea.value.slice(0, startPosition);
-                const valueAfterCursore = this.textarea.value.slice(endPosition);
-                // eslint-disable-next-line max-len
-                this.textarea.value = valueBeforeCursore + keyContent[langShift] + valueAfterCursore;
+                this.text = this.textarea.value;
+                const valueBeforeCursore = this.text.slice(0, startPosition);
+                const valueAfterCursore = this.text.slice(endPosition);
+                this.text = valueBeforeCursore + keyContent[langShift] + valueAfterCursore;
                 this.textarea.focus();
                 this.textarea.selectionEnd = startPosition + 1;
-                return;
               }
               this.addClassToButtons(e.code);
               this.handleCapsLockAction(keyContent[this.lang], startPosition, endPosition);
