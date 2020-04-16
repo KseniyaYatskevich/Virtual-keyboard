@@ -35,19 +35,19 @@ class KeyboardEventHandler {
     this.textarea.value += '\t';
   }
 
-  handleBackspaceAction(start, end) {
+  handleDeleteLetter(start, end) {
     if (this.textarea.value.length !== 0) {
-      this.textarea.setRangeText('', start - 1, end, 'end');
+      this.textarea.setRangeText('', start, end, 'end');
     }
     this.textarea.focus();
   }
 
-  handleDeleteAction(start, end) {
-    if (this.textarea.value.length !== 0) {
-      this.textarea.setRangeText('', start, end + 1, 'end');
-    }
-    this.textarea.focus();
-  }
+  // handleDeleteAction(start, end) {
+  //   if (this.textarea.value.length !== 0) {
+  //     this.textarea.setRangeText('', start, end + 1, 'end');
+  //   }
+  //   this.textarea.focus();
+  // }
 
   handleCapsLockAction(target, start, end) {
     const valueBeforeCursore = this.textarea.value.slice(0, start);
@@ -88,7 +88,7 @@ class KeyboardEventHandler {
           this.handleTabAction();
           break;
         case 'Backspace':
-          this.handleBackspaceAction(startPosition, endPosition);
+          this.handleDeleteLetter(startPosition - 1, endPosition);
           break;
         case '◄':
           this.textarea.focus();
@@ -99,7 +99,7 @@ class KeyboardEventHandler {
           this.textarea.selectionStart = endPosition + 1;
           break;
         case 'Del':
-          this.handleDeleteAction(startPosition, endPosition);
+          this.handleDeleteLetter(startPosition, endPosition + 1);
           break;
         case 'CapsLock':
           this.isCapslock = !this.isCapslock;
@@ -151,11 +151,11 @@ class KeyboardEventHandler {
         break;
       case 'Backspace':
         this.addClassToButtons(e.code, 'add', 'active');
-        this.handleBackspaceAction(startPosition, endPosition);
+        this.handleDeleteLetter(startPosition - 1, endPosition);
         break;
       case 'Delete':
         this.addClassToButtons(e.code, 'add', 'active');
-        this.handleDeleteAction(startPosition, endPosition);
+        this.handleDeleteLetter(startPosition, endPosition + 1);
         break;
       case 'Tab':
         this.addClassToButtons(e.code, 'add', 'active');
