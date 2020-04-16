@@ -8,24 +8,14 @@ class KeyboardEventHandler {
     this.lang = lang;
   }
 
-  addClassToButtons(code) {
+  addClassToButtons(code, handler, className) {
     for (let i = 0; i < this.keyboardButtons.length; i += 1) {
       if (this.keyboardButtons[i].getAttribute('data-code') === code) {
-        this.keyboardButtons[i].classList.add('active');
+        this.keyboardButtons[i].classList[handler](className);
         return;
       }
     }
   }
-
-  toggleClassToButtons(code) {
-    for (let i = 0; i < this.keyboardButtons.length; i += 1) {
-      if (this.keyboardButtons[i].getAttribute('data-code') === code) {
-        this.keyboardButtons[i].classList.toggle('active');
-        return;
-      }
-    }
-  }
-
 
   changeTextContentButtons(data) {
     for (let i = 0; i < this.keyboardButtons.length; i += 1) {
@@ -126,53 +116,53 @@ class KeyboardEventHandler {
     const startPosition = this.textarea.selectionStart;
     const endPosition = this.textarea.selectionEnd;
     if (constants.IGNORE_CONTENT.includes(e.code)) {
-      this.addClassToButtons(e.code);      
+      this.addClassToButtons(e.code, 'add', 'active');
     }
     switch (e.code) {
       case 'ControlRight':
       case 'ControlLeft':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         break;
       case 'AltLeft':
       case 'AltRight':
         if (e.ctrlKey === true) {
-          this.addClassToButtons(e.code);
+          this.addClassToButtons(e.code, 'add', 'active');
           this.handleSwitchLanguage();
         }
         break;
       case 'ArrowLeft':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.textarea.focus();
         this.textarea.selectionEnd = startPosition - 1;
         break;
       case 'ArrowRight':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.textarea.focus();
         this.textarea.selectionStart = endPosition + 1;
         break;
       case 'ShiftLeft':
       case 'ShiftRight':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.handleShiftAction();
         break;
       case 'CapsLock':
         this.isCapslock = !this.isCapslock;
-        this.toggleClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'toggle', 'active');
         break;
       case 'Backspace':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.handleBackspaceAction(startPosition, endPosition);
         break;
       case 'Delete':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.handleDeleteAction(startPosition, endPosition);
         break;
       case 'Tab':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.handleTabAction();
         break;
       case 'Enter':
-        this.addClassToButtons(e.code);
+        this.addClassToButtons(e.code, 'add', 'active');
         this.handleEnterAction(startPosition, endPosition);
         break;
       default:
@@ -181,7 +171,7 @@ class KeyboardEventHandler {
             const keyContent = constants.KEYS[row][button];
             if (e.code === keyContent.code) {
               if (e.shiftKey === true) {
-                this.addClassToButtons(e.code);
+                this.addClassToButtons(e.code, 'add', 'active');
                 const langShift = `${this.lang}Shift`;
                 this.text = this.textarea.value;
                 const valueBeforeCursore = this.text.slice(0, startPosition);
@@ -190,7 +180,7 @@ class KeyboardEventHandler {
                 this.textarea.focus();
                 this.textarea.selectionEnd = startPosition + 1;
               }
-              this.addClassToButtons(e.code);
+              this.addClassToButtons(e.code, 'add', 'active');
               this.handleCapsLockAction(keyContent[this.lang], startPosition, endPosition);
               return;
             }
@@ -202,7 +192,7 @@ class KeyboardEventHandler {
   keyUpHandler(e) {
     e.preventDefault();
     if (e.code !== 'CapsLock') {
-      this.toggleClassToButtons(e.code);
+      this.addClassToButtons(e.code, 'toggle', 'active');
     }
     if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
       const dataLang = `data-${this.lang}`;
