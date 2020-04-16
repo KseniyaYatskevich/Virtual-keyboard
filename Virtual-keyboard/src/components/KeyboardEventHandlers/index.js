@@ -78,7 +78,7 @@ class KeyboardEventHandler {
   }
 
   handleSwitchLanguage() {
-    this.lang = this.lang === 'ru' ? 'eng' : 'ru';
+    this.lang = (this.lang === 'ru') ? 'eng' : 'ru';
     const dataLang = `data-${this.lang}`;
     this.changeTextContentButtons(dataLang);
     localStorage.setItem('language', this.lang);
