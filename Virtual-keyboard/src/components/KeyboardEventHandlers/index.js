@@ -10,7 +10,7 @@ class KeyboardEventHandler {
 
   addClassToButtons(code) {
     for (let i = 0; i < this.keyboardButtons.length; i += 1) {
-      if (this.keyboardButtons[i].getAttribute('data-code') === code) {
+      if (this.keyboardButtons[i].dataset.code === code) {
         this.keyboardButtons[i].classList.add('active');
         return;
       }
@@ -61,7 +61,7 @@ class KeyboardEventHandler {
   handleCapsLockAction(target, start, end) {
     const valueBeforeCursore = this.textarea.value.slice(0, start);
     const vatueAfterCursore = this.textarea.value.slice(end);
-    if (this.isCapslock === true) {
+    if (this.isCapslock) {
       this.textarea.value = valueBeforeCursore + target.toUpperCase() + vatueAfterCursore;
       this.textarea.focus();
       this.textarea.selectionEnd = start + 1;
