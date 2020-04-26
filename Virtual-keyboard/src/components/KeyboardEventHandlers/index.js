@@ -12,7 +12,7 @@ class KeyboardEventHandler {
     for (let i = 0; i < this.keyboardButtons.length; i += 1) {
       if (this.keyboardButtons[i].getAttribute('data-code') === code) {
         this.keyboardButtons[i].classList[handler](className);
-        return;
+        return '';
       }
     }
   }
@@ -23,7 +23,10 @@ class KeyboardEventHandler {
     }
   }
 
-  handleEnterAction(start, end) {
+  handleEnterAction(start, end, code) {
+    if (code) {
+      this.addClassToButtons(code, 'add', 'active');
+    }
     const valueBeforeCursore = this.textarea.value.slice(0, start);
     const vatueAfterCursore = this.textarea.value.slice(end);
     this.textarea.value = `${valueBeforeCursore}\n${vatueAfterCursore}`;
@@ -31,11 +34,17 @@ class KeyboardEventHandler {
     this.textarea.selectionEnd = end + 1;
   }
 
-  handleTabAction() {
+  handleTabAction(code) {
+    if (code) {
+      this.addClassToButtons(code, 'add', 'active');
+    }
     this.textarea.value += '\t';
   }
 
-  handleDeleteLetter(start, end) {
+  handleDeleteLetter(start, end, code) {
+    if (code) {
+      this.addClassToButtons(code, 'add', 'active');
+    }
     if (this.textarea.value.length !== 0) {
       this.textarea.setRangeText('', start, end, 'end');
     }
@@ -52,12 +61,18 @@ class KeyboardEventHandler {
     this.textarea.selectionEnd = start + 1;
   }
 
-  handleShiftAction() {
+  handleShiftAction(code) {
+    if (code) {
+      this.addClassToButtons(code, 'add', 'active');
+    }
     const dataShift = `data-shift-${this.lang}`;
     this.changeTextContentButtons(dataShift);
   }
 
-  handleSwitchLanguage() {
+  handleSwitchLanguage(code) {
+    if (code) {
+      this.addClassToButtons(code, 'add', 'active');
+    }
     this.lang = (this.lang === 'ru') ? 'eng' : 'ru';
     const dataLang = `data-${this.lang}`;
     this.changeTextContentButtons(dataLang);
@@ -119,8 +134,7 @@ class KeyboardEventHandler {
       case 'AltLeft':
       case 'AltRight':
         if (e.ctrlKey === true) {
-          this.addClassToButtons(e.code, 'add', 'active');
-          this.handleSwitchLanguage();
+          this.handleSwitchLanguage(e.code);
         }
         break;
       case 'ArrowLeft':
@@ -135,28 +149,23 @@ class KeyboardEventHandler {
         break;
       case 'ShiftLeft':
       case 'ShiftRight':
-        this.addClassToButtons(e.code, 'add', 'active');
-        this.handleShiftAction();
+        this.handleShiftAction(e.code);
         break;
       case 'CapsLock':
         this.isCapslock = !this.isCapslock;
         this.addClassToButtons(e.code, 'toggle', 'active');
         break;
       case 'Backspace':
-        this.addClassToButtons(e.code, 'add', 'active');
-        this.handleDeleteLetter(startPosition - 1, endPosition);
+        this.handleDeleteLetter(startPosition - 1, endPosition, e.code);
         break;
       case 'Delete':
-        this.addClassToButtons(e.code, 'add', 'active');
-        this.handleDeleteLetter(startPosition, endPosition + 1);
+        this.handleDeleteLetter(startPosition, endPosition + 1, e.code);
         break;
       case 'Tab':
-        this.addClassToButtons(e.code, 'add', 'active');
-        this.handleTabAction();
+        this.handleTabAction(e.code);
         break;
       case 'Enter':
-        this.addClassToButtons(e.code, 'add', 'active');
-        this.handleEnterAction(startPosition, endPosition);
+        this.handleEnterAction(startPosition, endPosition, e.code);
         break;
       default:
         for (let row = 0; row < constants.KEYS.length; row += 1) {
