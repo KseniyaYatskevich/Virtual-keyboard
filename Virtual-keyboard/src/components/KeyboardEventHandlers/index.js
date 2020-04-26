@@ -42,13 +42,6 @@ class KeyboardEventHandler {
     this.textarea.focus();
   }
 
-  // handleDeleteAction(start, end) {
-  //   if (this.textarea.value.length !== 0) {
-  //     this.textarea.setRangeText('', start, end + 1, 'end');
-  //   }
-  //   this.textarea.focus();
-  // }
-
   handleCapsLockAction(target, start, end) {
     const valueBeforeCursore = this.textarea.value.slice(0, start);
     const vatueAfterCursore = this.textarea.value.slice(end);
@@ -78,7 +71,7 @@ class KeyboardEventHandler {
       const { textContent } = e.target;
       if (constants.IGNORE_ACTION_BUTTONS.includes(textContent)) {
         this.textarea.focus();
-        return;
+        return '';
       }
       switch (textContent) {
         case 'Enter':
@@ -182,7 +175,7 @@ class KeyboardEventHandler {
               }
               this.addClassToButtons(e.code, 'add', 'active');
               this.handleCapsLockAction(keyContent[this.lang], startPosition, endPosition);
-              return;
+              return '';
             }
           }
         }
